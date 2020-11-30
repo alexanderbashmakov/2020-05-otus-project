@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="price-001" author="abashmakov">
+        <createTable tableName="price">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="price" type="FLOAT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="bookname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="price-002" author="abashmakov">
+        <loadUpdateData
+                tableName="price"
+                primaryKey="id"
+                separator=";"
+                file="/liquibase/data/prices-001.csv">
+        </loadUpdateData>
+    </changeSet>
+</databaseChangeLog>

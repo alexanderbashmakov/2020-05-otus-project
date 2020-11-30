@@ -1,0 +1,19 @@
+GET http://localhost:7001/api/authors
+###
+DELETE http://localhost:7001/api/author/1
+###
+POST http://localhost:7001/api/author
+Content-Type: application/json
+
+{
+  "name": "2",
+  "birthDate": "2000-10-10"
+}
+###
+PUT http://localhost:7001/api/author/3
+Content-Type: application/json
+
+{
+  "name": "2",
+  "birthDate": "2000-10-10"
+}

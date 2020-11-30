@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: library
+  messages:
+    basename: bundle
+  data:
+    mongodb:
+      authentication-database: none
+      port: ${DB_PORT}
+      host: ${DB_HOST}
+      database: ${DB_NAME}
+mongock:
+  change-logs-scan-package:
+    - ru.otus.library.changelogs
+  enabled: true
+  runner-type: InitializingBean
+locale: ru
+#logging:
+#  level:
+#    ROOT: DEBUG
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:7002/eureka}
+    enabled: true
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    leaseExpirationDurationInSeconds: 90
+    leaseRenewalIntervalInSeconds: 30
+    prefer-ip-address: true
+  server:
+    eviction-interval-timer-in-ms: 15000
+
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+    external-reference-service:
+      path: /extref/**
+      serviceId: external-reference-service
+      stripPrefix: true
+    book-price-service:
+      path: /price/**
+      serviceId: book-price-service
+      stripPrefix: true
+#    auth-service:
+#      path: /auth/**
+#      serviceId: auth-service
+#      stripPrefix: true
+#    questions-service:
+#      path: /questions/**
+#      serviceId: questions-service
+#      stripPrefix: true
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 30000
+
+server:
+  port: ${EXTERNAL_REFERENCE_PORT:7000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
